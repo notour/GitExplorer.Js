@@ -63,7 +63,7 @@ build/*
 .env
 
 # VS Code
-.vscode
+# .vscode
 
 # npm package lock file
 package-lock.json
