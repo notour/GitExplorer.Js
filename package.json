@@ -1,0 +1,45 @@
+{
+  "name": "express-typescript-starter",
+  "version": "0.1.0",
+  "description": "A starting point for Node.js express apps with TypeScript",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/TypeScript-Node-Starter"
+  },
+  "author": "Bowden Kelly",
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run server",
+    "build": "npm run build-ts && npm run tslint && npm run copy-static-assets",
+    "server": "node dist/server/main.js",
+    "watch-node": "nodemon dist/server/main.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "test": "jest --forceExit --coverage --verbose",
+    "watch-test": "npm run test -- --watchAll",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "copy-static-assets": "ts-node copyStaticAssets.ts",
+    "debug": "npm run build && npm run watch-debug",
+    "serve-debug": "nodemon --inspect dist/server/main.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\""
+  },
+  "dependencies": {
+    "errorhandler": "^1.5.0",
+    "express": "^4.16.2",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.11.1",
+    "@types/shelljs": "^0.7.8",
+    "@types/errorhandler": "^0.0.32",
+    "@types/request": "^2.47.0",
+    "@types/node": "^9.4.6",
+    "jest": "^22.0.4",
+    "shelljs": "^0.8.1",
+    "ts-jest": "^22.0.4",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2",
+    "ts-node": "^5.0.0"
+  }
+}
