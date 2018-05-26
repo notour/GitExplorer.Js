@@ -20,7 +20,6 @@ abstract class WebApi {
     public exec(methodName: string, req: Request): any {
         return (this as any)[methodName](req);
     }
-
     // endregion
 }
 
