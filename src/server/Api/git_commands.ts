@@ -4,23 +4,30 @@ import GitRepos from "../Config/git_repos";
 class GitCommands {
     private static readonly config = GitRepos.Instance;
 
+    private static CommandLine() {
+        const directory = GitRepos.Instance.GitDirectory;
+        const gitPath = GitRepos.Instance.GitPath;
+        const cmd = gitPath + " -C \"" + directory + "\" ";
+        return cmd;
+    }
+
     public static GetVersion() {
-        const config = GitRepos.Instance.ConfigFile;
-        const ret = shell.exec("git version");
+        const ret = shell.exec(this.CommandLine() + "version");
+        let out = ret.stdout.replace("\"", "");
+        if (out == "") {
+            out = ret.stderr;
+            return out;
+        }
         return ret.stdout.replace("\"", "");
     }
 
     public static BranchList() {
-        const directory = GitRepos.Instance.GitDirectory;
-        const gitPath = GitRepos.Instance.GitPath;
-        const cmd = gitPath + " -C \"" + directory + "\" branch --list";
-        const ret = shell.exec(cmd);
+        const ret = shell.exec(this.CommandLine() + "branch --list");
         let out = ret.stdout.replace("\"", "");
         if (out == "")
             out = ret.stderr;
         else {
-            out = out.replace(/(\r\n|\n|\r|\t)/gm, " ");
-            out = out.replace(/\s+/g, " ");
+            out = this.CleanRet(out);
             let branches = out.split(" ");
             function isNotEmpty(element: string, index: any, array: any) {
                 return element != "";
@@ -29,6 +36,22 @@ class GitCommands {
             out = JSON.stringify(branches);
         }
         return out;
+    }
+
+    public static Config() {
+        const userName = shell.exec(this.CommandLine() + "config --get user.name").stdout;
+        const userEmail = shell.exec(this.CommandLine() + "config --get user.email").stdout;
+        const ret = [
+            [ "Name", this.CleanRet(userName) ],
+            [ "Email", this.CleanRet(userEmail) ]
+        ];
+        return JSON.stringify(ret);
+    }
+
+    private static CleanRet(out: string) {
+        out = out.replace(/(\r\n|\n|\r|\t)/gm, " ");
+        out = out.replace(/\s+/g, " ");
+        return out.trim();
     }
 }
 

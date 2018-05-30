@@ -39,6 +39,7 @@ class GitService extends WebApi {
         return [
             [ "/git/version", "getGitVersion" ],
             [ "/git/branchList", "branchList" ],
+            [ "/git/config", "config" ],
         ];
     }
 
@@ -49,6 +50,9 @@ class GitService extends WebApi {
     }
     public branchList(): string {
         return GitCommands.BranchList();
+    }
+    public config(): string {
+        return GitCommands.Config();
     }
 
     // endregion
