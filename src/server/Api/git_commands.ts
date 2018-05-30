@@ -1,16 +1,24 @@
+import * as shell from "shelljs";
+import GitRepos from "../Config/git_repos";
+
 class GitCommands {
-    public GetVersion() {
-        const shell = require("shelljs");
+    private static readonly config = GitRepos.Instance;
+
+    public static GetVersion() {
+        const config = GitRepos.Instance.ConfigFile;
         const ret = shell.exec("git version");
-        return ret.replace("\"", "");
+        return ret.stdout.replace("\"", "");
     }
 
-    public BranchList() {
-        const shell = require("shelljs");
-        const ret = shell.exec("git branch --list");
-        return ret.replace("\"", "");
+    public static BranchList() {
+        const directory = GitRepos.Instance.GitDirectory;
+        const cmd = "git -C \"" + directory + "\" branch --list";
+        const ret = shell.exec(cmd);
+        let out = ret.stdout.replace("\"", "");
+        if (out == "")
+            out = ret.stderr;
+        return out;
     }
 }
 
-const git_commands = new GitCommands();
-export default git_commands;
+export default GitCommands;
