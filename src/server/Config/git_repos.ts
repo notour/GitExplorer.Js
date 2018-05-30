@@ -1,6 +1,7 @@
 import * as os from "os"; // used to get hostname
 import * as fs from "fs"; // used to read/write json
 import * as path from "path"; // for path.resolve
+import { json } from "body-parser";
 
 class GitRepos {
     private static readonly _instance = new GitRepos();
@@ -18,8 +19,16 @@ class GitRepos {
 
     private _directory = "";
     public get GitDirectory(): string {
-        this.ReadOrCreateConfig();
+        if (this._directory == "")
+            this.ReadOrCreateConfig();
         return this._directory;
+    }
+
+    private _gitPath = "";
+    public get GitPath(): string {
+        if (this._gitPath == "")
+            this.ReadOrCreateConfig();
+        return this._gitPath;
     }
 
     public static get Instance(): GitRepos {
@@ -35,6 +44,7 @@ class GitRepos {
         const fileContent = fs.readFileSync(this.ConfigFile, "utf8");
         const jsonContent = JSON.parse(fileContent);
         this._directory = jsonContent.Directory;
+        this._gitPath = jsonContent.GitPath;
     }
 }
 
