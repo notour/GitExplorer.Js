@@ -4,6 +4,8 @@ import * as shell from "shelljs";
 import IOContainer from "../../common/ioc_container";
 import WebApi from "./web_api";
 import GitCommands from "./git_commands";
+import { IncomingMessage } from "http";
+import * as url from "url";
 
 /**
  * Service that provide git results
@@ -39,6 +41,7 @@ class GitService extends WebApi {
         return [
             [ "/git/version", "getGitVersion" ],
             [ "/git/branchList", "branchList" ],
+            [ "/git/branchHistory", "branchHistory" ],
             [ "/git/config", "config" ],
         ];
     }
@@ -51,7 +54,11 @@ class GitService extends WebApi {
     public branchList(): string {
         return GitCommands.BranchList();
     }
-    public config(): string {
+    public branchHistory(branch: IncomingMessage): string {
+        const data = url.parse(branch.url);
+        return GitCommands.BranchHistory(data.query);
+    }
+    public config(): string     {
         return GitCommands.Config();
     }
 

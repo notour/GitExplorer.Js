@@ -1,5 +1,6 @@
 import * as shell from "shelljs";
 import GitRepos from "../Config/git_repos";
+import { IncomingMessage } from "http";
 
 class GitCommands {
     private static readonly config = GitRepos.Instance;
@@ -29,6 +30,23 @@ class GitCommands {
         else {
             out = this.CleanRet(out);
             let branches = out.split(" ");
+            function isNotEmpty(element: string, index: any, array: any) {
+                return element != "";
+            }
+            branches = branches.filter(isNotEmpty);
+            out = JSON.stringify(branches);
+        }
+        return out;
+    }
+
+    public static BranchHistory(branch: string) {
+        const ret = shell.exec(this.CommandLine() + "log --oneline --no-color " + branch);
+        let out = ret.stdout;
+        if (out == "")
+            out = ret.stderr;
+        else {
+            console.debug(out);
+            let branches = out.split("\n");
             function isNotEmpty(element: string, index: any, array: any) {
                 return element != "";
             }
