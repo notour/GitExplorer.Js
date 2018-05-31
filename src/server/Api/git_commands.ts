@@ -46,12 +46,15 @@ class GitCommands {
             out = ret.stderr;
         else {
             console.debug(out);
-            let branches = out.split("\n");
-            function isNotEmpty(element: string, index: any, array: any) {
-                return element != "";
+            const branches = out.split("\n");
+            function createCommit(branch: string) {
+                const index = branch.indexOf(" ");
+                const id = branch.substring(0, index);
+                const comment = branch.substring(index + 1);
+                return [ id, comment ];
             }
-            branches = branches.filter(isNotEmpty);
-            out = JSON.stringify(branches);
+            const commits = branches.map(createCommit);
+            out = JSON.stringify(commits);
         }
         return out;
     }
