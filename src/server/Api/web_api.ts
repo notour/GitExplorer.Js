@@ -3,7 +3,7 @@ import { Request } from "express";
 /**
  * Web api
  */
-abstract class WebApi {
+export abstract class WebApi {
 
     // region methods
 
@@ -23,5 +23,3 @@ abstract class WebApi {
 
     // endregion
 }
-
-export default WebApi;

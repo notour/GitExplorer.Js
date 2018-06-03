@@ -1,5 +1,7 @@
-
-class IOContainer {
+/**
+ * Ioc container implementation
+ */
+export class IOContainer {
 
     // region Fields
 
@@ -31,5 +33,3 @@ class IOContainer {
 
     // endregion
 }
-
-export default IOContainer;

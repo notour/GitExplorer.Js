@@ -33,6 +33,7 @@ bower_components
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 dist/
+dist_test/
 
 # Dependency directories
 node_modules/
@@ -63,7 +64,8 @@ build/*
 .env
 
 # VS Code
-.vscode
+# .vscode
+.vs
 
 # npm package lock file
 package-lock.json

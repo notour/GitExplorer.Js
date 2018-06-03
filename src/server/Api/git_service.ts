@@ -1,8 +1,8 @@
 import { Request } from "express";
 import * as shell from "shelljs";
 
-import IOContainer from "../../common/ioc_container";
-import WebApi from "./web_api";
+import { IOContainer } from "../../common/ioc_container";
+import { WebApi } from "./web_api";
 
 /**
  * Service that provide git results

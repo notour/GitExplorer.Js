@@ -1,9 +1,9 @@
 import express, { RequestHandler, json } from "express";
 import errorHandler from "errorhandler";
 import { Server } from "http";
-import IWebApi from "./Api/web_api";
+import  { WebApi } from "./Api/web_api";
 
-import IOContainer from "../common/ioc_container";
+import { IOContainer } from "../common/ioc_container";
 
 /**
  * Main Server Application
@@ -62,7 +62,7 @@ class GitServer {
 
   // region Methods
 
-  public registerApi(webApiInst: IWebApi) {
+  public registerApi(webApiInst: WebApi) {
 
     const configs = webApiInst.getExposedApi();
 

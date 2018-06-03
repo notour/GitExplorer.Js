@@ -11,35 +11,46 @@
   "scripts": {
     "start": "npm run server",
     "build": "npm run build-ts && npm run tslint && npm run copy-static-assets",
+    "build-test": "npm run build-test-ts && npm run tslint-test",
     "server": "node dist/server/main.js",
-    "watch-node": "nodemon dist/server/main.js",
-    "watch": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run watch-node\"",
-    "test": "jest --forceExit --coverage --verbose",
-    "watch-test": "npm run test -- --watchAll",
+    "test-all": "node ./node_modules/mocha/bin/mocha ./dist_test/common/run.js ./dist_test/client/run.js ./dist_test/server/run.js",
+    "test-common": "node ./node_modules/mocha/bin/mocha --require ts-node/register ./dist_test/test/common/run.js",
+    "watch-test-common": "node -w ./node_modules/mocha/bin/mocha --require ts-node/register ./dist_test/test/common/run.js",
+    "build-and-test-common": "npm run build-test && npm run test-common",
+    "build-and-test": "npm run build-test && npm run test-all",
     "build-ts": "tsc",
-    "watch-ts": "tsc -w",
+    "build-test-ts": "tsc -p tsconfig.test.json",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
-    "copy-static-assets": "ts-node copyStaticAssets.ts",
-    "debug": "npm run build && npm run watch-debug",
-    "serve-debug": "nodemon --inspect dist/server/main.js",
-    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\""
+    "tslint-test": "tslint -c tslint.json -p tsconfig.test.json",
+    "copy-static-assets": "ts-node copyStaticAssets.ts"
   },
   "dependencies": {
     "errorhandler": "^1.5.0",
     "express": "^4.16.2",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "rxjs": "^6.0.0",
+    "zone.js": "~0.8.26",
+    "@angular/core": "^6.0.3",
+    "@angular/common": "^6.0.3",
+    "@angular/platform-browser": "^6.0.3",
+    "@angular/http": "^6.0.3",
+    "@angular/router": "^6.0.3",
+    "@angular/typescript": "^2.0.0-5d0e199"
   },
   "devDependencies": {
-    "@types/express": "^4.11.1",
-    "@types/shelljs": "^0.7.8",
     "@types/errorhandler": "^0.0.32",
-    "@types/request": "^2.47.0",
+    "@types/express": "^4.11.1",
     "@types/node": "^9.4.6",
-    "jest": "^22.0.4",
+    "@types/request": "^2.47.0",
+    "@types/shelljs": "^0.7.8",
+    "@types/mocha": "^5.2.0",
+    "@types/chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "mochawesome": "^1.0.0",
     "shelljs": "^0.8.1",
-    "ts-jest": "^22.0.4",
+    "ts-node": "^5.0.0",
     "tslint": "^5.9.1",
     "typescript": "^2.7.2",
-    "ts-node": "^5.0.0"
+    "chai": "^4.1.2"
   }
 }
